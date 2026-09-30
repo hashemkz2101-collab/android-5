@@ -96,6 +96,7 @@ private fun UsersManagementSection() {
 private fun UserRow(u: JSONObject, onChanged: () -> Unit) {
     val scope = rememberCoroutineScope()
     var tapeAccess by remember { mutableStateOf(hasApp(u, "tape")) }
+    var tape2Access by remember { mutableStateOf(hasApp(u, "tape2")) }
     var khashAccess by remember { mutableStateOf(hasApp(u, "khash")) }
     var salesAccess by remember { mutableStateOf(hasApp(u, "sales")) }
     var accountingAccess by remember { mutableStateOf(hasApp(u, "accounting")) }
@@ -107,6 +108,7 @@ private fun UserRow(u: JSONObject, onChanged: () -> Unit) {
                 val apps = JSONObject().apply {}
                 val appsArr = org.json.JSONArray()
                 if (tapeAccess) appsArr.put("tape")
+                if (tape2Access) appsArr.put("tape2")
                 if (khashAccess) appsArr.put("khash")
                 if (salesAccess) appsArr.put("sales")
                 if (accountingAccess) appsArr.put("accounting")
@@ -132,9 +134,13 @@ private fun UserRow(u: JSONObject, onChanged: () -> Unit) {
                 Checkbox(checked = tapeAccess, onCheckedChange = { tapeAccess = it; update() })
                 Text("تپه‌ها")
                 Spacer(Modifier.width(12.dp))
+                Checkbox(checked = tape2Access, onCheckedChange = { tape2Access = it; update() })
+                Text("تپه‌ها ۲")
+                Spacer(Modifier.width(12.dp))
                 Checkbox(checked = khashAccess, onCheckedChange = { khashAccess = it; update() })
                 Text("خاش")
-                Spacer(Modifier.width(12.dp))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = salesAccess, onCheckedChange = { salesAccess = it; update() })
                 Text("فروش")
                 Spacer(Modifier.width(12.dp))
@@ -161,6 +167,7 @@ private fun AddUserDialog(onDismiss: () -> Unit, onCreated: () -> Unit) {
     var displayName by remember { mutableStateOf("") }
     var isAdmin by remember { mutableStateOf(false) }
     var tapeAccess by remember { mutableStateOf(true) }
+    var tape2Access by remember { mutableStateOf(false) }
     var khashAccess by remember { mutableStateOf(false) }
     var salesAccess by remember { mutableStateOf(false) }
     var accountingAccess by remember { mutableStateOf(false) }
@@ -182,6 +189,9 @@ private fun AddUserDialog(onDismiss: () -> Unit, onCreated: () -> Unit) {
                     Checkbox(checked = tapeAccess, onCheckedChange = { tapeAccess = it }); Text("دسترسی تپه‌ها")
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = tape2Access, onCheckedChange = { tape2Access = it }); Text("دسترسی تپه‌ها ۲")
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = khashAccess, onCheckedChange = { khashAccess = it }); Text("دسترسی خاش")
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -199,6 +209,7 @@ private fun AddUserDialog(onDismiss: () -> Unit, onCreated: () -> Unit) {
                     try {
                         val appsArr = org.json.JSONArray()
                         if (tapeAccess) appsArr.put("tape")
+                if (tape2Access) appsArr.put("tape2")
                         if (khashAccess) appsArr.put("khash")
                         if (salesAccess) appsArr.put("sales")
                         if (accountingAccess) appsArr.put("accounting")

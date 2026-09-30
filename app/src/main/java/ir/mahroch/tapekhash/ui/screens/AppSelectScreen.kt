@@ -18,6 +18,7 @@ import ir.mahroch.tapekhash.data.Session
 @Composable
 fun AppSelectScreen(
     onOpenTape: () -> Unit,
+    onOpenTape2: () -> Unit,
     onOpenKhash: () -> Unit,
     onOpenSales: () -> Unit,
     onOpenAccounting: () -> Unit,
@@ -58,6 +59,16 @@ fun AppSelectScreen(
                 Spacer(Modifier.height(16.dp))
             }
 
+            if (user?.hasApp("tape2") == true) {
+                AppChoiceCard(
+                    title = "مدیریت تپه‌ها ۲",
+                    subtitle = "کپی برنامه‌ی تپه‌ها با باکس‌های جدید",
+                    icon = Icons.Default.Inventory2,
+                    onClick = onOpenTape2
+                )
+                Spacer(Modifier.height(16.dp))
+            }
+
             if (user?.hasApp("khash") == true) {
                 AppChoiceCard(
                     title = "مدیریت فاکتور خاش",
@@ -87,7 +98,7 @@ fun AppSelectScreen(
                 )
             }
 
-            if (user != null && !user.hasApp("tape") && !user.hasApp("khash") &&
+            if (user != null && !user.hasApp("tape") && !user.hasApp("tape2") && !user.hasApp("khash") &&
                 !user.hasApp("sales") && !user.hasApp("accounting")
             ) {
                 Text("شما به هیچ برنامه‌ای دسترسی ندارید. با مدیر سیستم تماس بگیرید.")
